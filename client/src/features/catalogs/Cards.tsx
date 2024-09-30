@@ -4,9 +4,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Product } from "../app/models/Product";
+import { Product } from "../../app/models/Product";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
+import { Link } from "react-router-dom";
 interface Props {
   Product: Product;
 }
@@ -42,8 +43,13 @@ function Cards(props: Props) {
         <Button size="small" variant="contained">
           Add to Cart
         </Button>
-        <Button size="small" variant="contained">
-          Buy Now
+        <Button
+          size="small"
+          variant="contained"
+          component={Link}
+          to={`/catalog/${props.Product.id}`}
+        >
+          View
         </Button>
       </CardActions>
     </Card>

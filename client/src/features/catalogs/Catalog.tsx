@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Product } from "../app/models/Product";
+import { Product } from "../../app/models/Product";
 import Button from "@mui/material/Button";
 import ProductList from "./ProductList";
 
