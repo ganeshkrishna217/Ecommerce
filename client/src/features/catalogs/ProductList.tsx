@@ -11,7 +11,7 @@ function ProductList(props: Props) {
     <Grid container spacing={3}>
       {props.Products.map((item) => {
         return (
-          <Grid size={3}>
+          <Grid size={3} key={item.id}>
             <Card Product={item} />
           </Grid>
         );

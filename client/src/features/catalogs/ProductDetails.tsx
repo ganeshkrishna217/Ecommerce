@@ -10,7 +10,9 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Product } from "../../app/models/Product";
-import axios from "axios";
+import agent from "../../app/api/agent";
+import NotFound from "../../app/errors/NotFound";
+import LoadingComponent from "../../app/layout/LoadingComponent";
 
 function ProductDetails() {
   const { id } = useParams<string>();
@@ -18,15 +20,16 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/Product/${id}`)
-      .then((Response) => setProduct(Response.data))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    id &&
+      agent.Catalog.details(parseInt(id))
+        .then((Response) => setProduct(Response))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <Typography variant="h2">Loading ...</Typography>;
-  if (!product) return <Typography variant="h2">Product Not Found</Typography>;
+  if (loading) return <LoadingComponent message="Loading Product" />;
+  if (!product) return <NotFound />;
   return (
     <Grid container spacing={6}>
       <Grid item xs={6}>

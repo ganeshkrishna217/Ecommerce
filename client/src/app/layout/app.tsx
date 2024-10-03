@@ -4,6 +4,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(false);
@@ -21,6 +23,7 @@ function App() {
   }
   return (
     <ThemeProvider theme={darkmode}>
+      <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
       <CssBaseline />
       <Header changeMode={changeMode}></Header>
       <Container>
