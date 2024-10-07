@@ -3,8 +3,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
 import { Badge, Box, IconButton, List, ListItem } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ShoppingCart } from "@mui/icons-material";
+import { useStoreContext } from "../context/StoreContext";
 
 interface Props {
   changeMode: () => void;
@@ -26,6 +27,8 @@ const sxProp = {
   "&.active": { color: "secondary.main" },
 };
 function Header(props: Props) {
+  const { basket } = useStoreContext();
+  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <>
       <AppBar position="static" sx={{ mb: 4 }}>
@@ -58,6 +61,8 @@ function Header(props: Props) {
           </List>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
+              component={Link}
+              to="/basket"
               size="large"
               edge="start"
               color="inherit"
@@ -68,7 +73,7 @@ function Header(props: Props) {
                 "&.active": { color: "secondary.main" },
               }}
             >
-              <Badge badgeContent="4" color="secondary">
+              <Badge badgeContent={itemCount} color="secondary">
                 <ShoppingCart></ShoppingCart>
               </Badge>
             </IconButton>
