@@ -5,13 +5,13 @@ import Switch from "@mui/material/Switch";
 import { Badge, Box, IconButton, List, ListItem } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { ShoppingCart } from "@mui/icons-material";
-import { useStoreContext } from "../context/StoreContext";
+import { UseAppSelector } from "../store/ConfigureStore";
 
 interface Props {
   changeMode: () => void;
 }
 const primaryLinks = [
-  { title: "catalog", path: "/catalog" },
+  { title: "products", path: "/catalog" },
   { title: "about", path: "/about" },
   { title: "contact", path: "/contact" },
 ];
@@ -27,7 +27,7 @@ const sxProp = {
   "&.active": { color: "secondary.main" },
 };
 function Header(props: Props) {
-  const { basket } = useStoreContext();
+  const { basket } = UseAppSelector((state) => state.basket);
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <>

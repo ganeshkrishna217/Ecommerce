@@ -1,43 +1,41 @@
-import { useState, useEffect } from "react";
-import { Product } from "../../app/models/Product";
-import Button from "@mui/material/Button";
+import { useEffect } from "react";
 import ProductList from "./ProductList";
-import agent from "../../app/api/agent";
 import LoadingComponent from "../../app/layout/LoadingComponent";
+import { fetchProductsAsync, productSelectors } from "./CatalogSlice";
+import { useAppDispatch, UseAppSelector } from "../../app/store/ConfigureStore";
 
 function Catalog() {
-  const [Products, setProducts] = useState<Product[]>([]);
-  const [Loading, setLoading] = useState(true);
+  const Products = UseAppSelector(productSelectors.selectAll);
+  const { productsLoaded, status } = UseAppSelector((state) => state.catalog);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    agent.Catalog.list()
-      .then((products) => setProducts(products))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-  }, []);
+    if (!productsLoaded) dispatch(fetchProductsAsync());
+  }, [dispatch, productsLoaded]);
 
-  if (Loading) return <LoadingComponent message="Loading Products" />;
+  if (status === "pendingFetchProducts")
+    return <LoadingComponent message="Loading Products" />;
 
-  function AddProduct() {
-    setProducts((prevState) => {
-      return [
-        ...prevState,
-        {
-          id: prevState.length + 2024101,
-          name: "product" + (Products.length + 1),
-          price: 100 * Products.length + 100,
-          pictureUrl: "http://picsum/random/101",
-          brand: "unkown brand",
-        },
-      ];
-    });
-  }
+  // function AddProduct() {
+  //   setProducts((prevState) => {
+  //     return [
+  //       ...prevState,
+  //       {
+  //         id: prevState.length + 2024101,
+  //         name: "product" + (Products.length + 1),
+  //         price: 100 * Products.length + 100,
+  //         pictureUrl: "http://picsum/random/101",
+  //         brand: "unkown brand",
+  //       },
+  //     ];
+  //   });
+  // }
   return (
     <>
       <ProductList Products={Products}></ProductList>
-      <Button variant="contained" onClick={AddProduct}>
+      {/* <Button variant="contained" onClick={AddProduct}>
         ADD Product
-      </Button>
+      </Button> */}
     </>
   );
 }

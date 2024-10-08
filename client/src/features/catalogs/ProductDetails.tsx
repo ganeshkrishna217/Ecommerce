@@ -8,35 +8,60 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../../app/models/Product";
-import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../app/layout/LoadingComponent";
-import { useStoreContext } from "../../app/context/StoreContext";
 import { LoadingButton } from "@mui/lab";
+import { useAppDispatch, UseAppSelector } from "../../app/store/ConfigureStore";
+import {
+  addBasketItemAysnc,
+  removeBasketItemAsync,
+} from "../Basket/BasketSlice";
+import { fetchProductAsync, productSelectors } from "./CatalogSlice";
 
 function ProductDetails() {
-  const { id } = useParams<string>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const product = UseAppSelector((state) =>
+    productSelectors.selectById(state, parseInt(id!))
+  );
+  const { status: productStatus } = UseAppSelector((state) => state.catalog);
   const [quantity, setQuantity] = useState(0);
-  const { basket } = useStoreContext();
-  // const [submit, setSubmit] = useState(false);
+  const { basket, status } = UseAppSelector((state) => state.basket);
+  const dispatch = useAppDispatch();
   const item = basket?.items.find((i) => i.productId === product?.id);
 
   useEffect(() => {
     if (item) setQuantity(item.quantity);
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    id &&
-      agent.Catalog.details(parseInt(id))
-        .then((Response) => setProduct(Response))
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-  }, [id, item]);
+    if (!product && id) dispatch(fetchProductAsync(parseInt(id)));
+  }, [dispatch, id, item, product]);
 
-  if (loading) return <LoadingComponent message="Loading Product" />;
+  function handleChangeQuantity(event: ChangeEvent<HTMLInputElement>) {
+    if (parseInt(event.currentTarget.value) >= 0) {
+      setQuantity(parseInt(event.currentTarget.value));
+    }
+  }
+
+  function handleUpdateQuantity() {
+    if (!product) return;
+    if (!item || item.quantity < quantity) {
+      const extraQuantity = item ? quantity - item.quantity : quantity;
+      dispatch(
+        addBasketItemAysnc({ productId: product.id, quantity: extraQuantity })
+      );
+    } else if (item && item.quantity > quantity) {
+      const additionalQuantity = item.quantity - quantity;
+      dispatch(
+        removeBasketItemAsync({
+          productId: item.productId,
+          quantity: additionalQuantity,
+        })
+      );
+    }
+  }
+
+  if (productStatus === "pendingFetchProduct")
+    return <LoadingComponent message="Loading Product" />;
   if (!product) return <NotFound />;
   return (
     <Grid container spacing={6}>
@@ -80,6 +105,7 @@ function ProductDetails() {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
+              onChange={handleChangeQuantity}
               variant="outlined"
               type="number"
               label="Quantity in cart"
@@ -89,6 +115,11 @@ function ProductDetails() {
           </Grid>
           <Grid item xs={6}>
             <LoadingButton
+              onClick={handleUpdateQuantity}
+              disabled={
+                item?.quantity === quantity || (!item && quantity === 0)
+              }
+              loading={status.includes("pending")}
               variant="contained"
               fullWidth
               color="primary"

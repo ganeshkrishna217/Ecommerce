@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Grid,
   Paper,
   Table,
@@ -11,30 +12,15 @@ import {
   Typography,
 } from "@mui/material";
 import { Add, Delete, Remove } from "@mui/icons-material";
-import { useStoreContext } from "../../app/context/StoreContext";
-import { useState } from "react";
-import agent from "../../app/api/agent";
 import { LoadingButton } from "@mui/lab";
 import BasketSummary from "./BasketSummary";
+import { Link } from "react-router-dom";
+import { useAppDispatch, UseAppSelector } from "../../app/store/ConfigureStore";
+import { addBasketItemAysnc, removeBasketItemAsync } from "./BasketSlice";
 
 export default function BasketPage() {
-  const [Status, setStatus] = useState({ loading: false, name: "" });
-  const { basket, setBasket, removeItem } = useStoreContext();
-
-  function handleAdd(productId: number, name: string) {
-    setStatus({ loading: true, name });
-    agent.Basket.addItem(productId)
-      .then((basket) => setBasket(basket))
-      .catch((err) => console.log(err))
-      .finally(() => setStatus({ loading: false, name: "" }));
-  }
-  function handleDelete(productId: number, quantity = 1, name: string) {
-    setStatus({ loading: true, name });
-    agent.Basket.deleteItem(productId)
-      .then(() => removeItem(productId, quantity))
-      .catch((err) => console.log(err))
-      .finally(() => setStatus({ loading: false, name: "" }));
-  }
+  const { basket, status } = UseAppSelector((state) => state.basket);
+  const dispatch = useAppDispatch();
 
   if (!basket) return <Typography variant="h3">Your Cart is Empty</Typography>;
   return (
@@ -72,10 +58,16 @@ export default function BasketPage() {
                 <TableCell align="center">
                   <LoadingButton
                     loading={
-                      Status.loading && Status.name === "rem" + item.productId
+                      status === "pendingRemoveItem" + item.productId + "rem"
                     }
                     onClick={() =>
-                      handleDelete(item.productId, 1, "rem" + item.productId)
+                      dispatch(
+                        removeBasketItemAsync({
+                          productId: item.productId,
+                          quantity: 1,
+                          name: "rem",
+                        })
+                      )
                     }
                     color="error"
                   >
@@ -83,11 +75,14 @@ export default function BasketPage() {
                   </LoadingButton>
                   {item.quantity}
                   <LoadingButton
-                    loading={
-                      Status.loading && Status.name === "add" + item.productId
-                    }
+                    loading={status === "pendingAddItem" + item.productId}
                     onClick={() =>
-                      handleAdd(item.productId, "add" + item.productId)
+                      dispatch(
+                        addBasketItemAysnc({
+                          productId: item.productId,
+                          quantity: 1,
+                        })
+                      )
                     }
                     color="secondary"
                   >
@@ -99,14 +94,17 @@ export default function BasketPage() {
                 </TableCell>
                 <TableCell align="right">
                   <LoadingButton
+                    color="error"
                     loading={
-                      Status.loading && Status.name === "del" + item.productId
+                      status === "pendingRemoveItem" + item.productId + "del"
                     }
                     onClick={() =>
-                      handleDelete(
-                        item.productId,
-                        item.quantity,
-                        "del" + item.productId
+                      dispatch(
+                        removeBasketItemAsync({
+                          productId: item.productId,
+                          quantity: item.quantity,
+                          name: "del",
+                        })
                       )
                     }
                   >
@@ -122,6 +120,16 @@ export default function BasketPage() {
         <Grid item xs={6} />
         <Grid item xs={6}>
           <BasketSummary />
+          <Button
+            color="primary"
+            size="large"
+            fullWidth
+            variant="contained"
+            component={Link}
+            to="/checkout"
+          >
+            CHECKOUT
+          </Button>
         </Grid>
       </Grid>
     </>
