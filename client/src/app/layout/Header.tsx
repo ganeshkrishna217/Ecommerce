@@ -6,6 +6,7 @@ import { Badge, Box, IconButton, List, ListItem } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { ShoppingCart } from "@mui/icons-material";
 import { UseAppSelector } from "../store/ConfigureStore";
+import SignedInMenu from "./SignedInMenu";
 
 interface Props {
   changeMode: () => void;
@@ -28,6 +29,7 @@ const sxProp = {
 };
 function Header(props: Props) {
   const { basket } = UseAppSelector((state) => state.basket);
+  const { user } = UseAppSelector((state) => state.account);
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <>
@@ -77,20 +79,24 @@ function Header(props: Props) {
                 <ShoppingCart></ShoppingCart>
               </Badge>
             </IconButton>
-            <List sx={{ display: "flex" }}>
-              {secondaryLinks.map((item) => {
-                return (
-                  <ListItem
-                    component={NavLink}
-                    to={item.path}
-                    key={item.path}
-                    sx={sxProp}
-                  >
-                    {item.title.toUpperCase()}
-                  </ListItem>
-                );
-              })}
-            </List>
+            {user ? (
+              <SignedInMenu />
+            ) : (
+              <List sx={{ display: "flex" }}>
+                {secondaryLinks.map((item) => {
+                  return (
+                    <ListItem
+                      component={NavLink}
+                      to={item.path}
+                      key={item.path}
+                      sx={sxProp}
+                    >
+                      {item.title.toUpperCase()}
+                    </ListItem>
+                  );
+                })}
+              </List>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

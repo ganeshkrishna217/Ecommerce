@@ -1,10 +1,29 @@
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
 {
     public static class DbIntializer
     {
-        public static void Intializer(DataContext context){
+        public static async Task Intializer(DataContext context, UserManager<User> userManager){
+
+            if(!userManager.Users.Any()){
+                var user = new User{
+                    UserName = "bkg",
+                    Email = "bkg@test.com",
+                };
+                await userManager.CreateAsync(user, "Pa$$word#BKGG217");
+                await userManager.AddToRoleAsync(user, "Member");
+                
+                var admin = new User{
+                    UserName = "admin",
+                    Email = "admin@test.com",
+                };
+                await userManager.CreateAsync(admin,"Pa$$word#BKGG217");
+                await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin" });
+
+            }
+
             if(context.Products.Any()) return ;
             var products = new List<Product>{
                 new Product
@@ -151,7 +170,7 @@ namespace API.Data
                     Description =
                         "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                     Price = 25000,
-                    PictureUrl = "/images/products/boot-redis1.png",
+                    PictureUrl = "/images/products/experimentShoesPic.jpg",
                     Brand = "Redis",
                     Type = "Boots",
                     QuantityInStock = 100
@@ -183,7 +202,7 @@ namespace API.Data
                     Name = "Angular Purple Boots",
                     Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
                     Price = 15000,
-                    PictureUrl = "/images/products/boot-ang2.png",
+                    PictureUrl = "/images/products/experimentShoePic2.png",
                     Brand = "Angular",
                     Type = "Boots",
                     QuantityInStock = 100

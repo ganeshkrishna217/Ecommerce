@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import router from "../routers/routes";
 import { PaginatedResponse } from "../models/Pagination";
+import { Store } from "../store/ConfigureStore";
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 600));
 
@@ -11,6 +12,12 @@ axios.defaults.withCredentials = true;
 function responsebody(response: AxiosResponse) {
   return response.data;
 }
+
+axios.interceptors.request.use((config) => {
+  const token = Store.getState().account.user?.token;
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 
 axios.interceptors.response.use(
   async (response) => {
@@ -89,9 +96,15 @@ const Basket = {
   deleteItem: (productId: number, quantity = 1) =>
     requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
 };
+const Account = {
+  login: (values: any) => requests.post("Account/login", values),
+  register: (values: any) => requests.post("Account/register", values),
+  currentUser: () => requests.get("Account/currentUser"),
+};
 const agent = {
   Catalog,
   TestErrors,
   Basket,
+  Account,
 };
 export default agent;

@@ -21,14 +21,15 @@ import {
 import { fetchProductAsync, productSelectors } from "./CatalogSlice";
 
 function ProductDetails() {
+  const { basket, status } = UseAppSelector((state) => state.basket);
+  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const product = UseAppSelector((state) =>
     productSelectors.selectById(state, parseInt(id!))
   );
   const { status: productStatus } = UseAppSelector((state) => state.catalog);
   const [quantity, setQuantity] = useState(0);
-  const { basket, status } = UseAppSelector((state) => state.basket);
-  const dispatch = useAppDispatch();
+
   const item = basket?.items.find((i) => i.productId === product?.id);
 
   useEffect(() => {

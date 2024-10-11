@@ -47,7 +47,7 @@ function Cards(props: Props) {
       </CardContent>
       <CardActions>
         <LoadingButton
-          loading={status.includes("pendingAddItem" + props.Product.id)}
+          loading={status === "pendingAddItem" + props.Product.id}
           onClick={() =>
             dispatch(
               addBasketItemAysnc({ productId: props.Product.id, quantity: 1 })
