@@ -60,7 +60,7 @@ export default function Register() {
         p: 4,
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+      <Avatar sx={{ m: 1, backgroundColor: "#00897b" }}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
@@ -120,7 +120,7 @@ export default function Register() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 2, backgroundColor: "#00897b" }}
         >
           Register
         </LoadingButton>

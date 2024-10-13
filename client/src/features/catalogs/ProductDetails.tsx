@@ -125,7 +125,11 @@ function ProductDetails() {
               fullWidth
               color="primary"
               size="large"
-              sx={{ height: "55px" }}
+              sx={{
+                height: "55px",
+                backgroundColor: "#00897b",
+                "&:hover": { backgroundColor: "#424242" },
+              }}
             >
               {item ? "Update Quantity" : "Add to cart"}
             </LoadingButton>

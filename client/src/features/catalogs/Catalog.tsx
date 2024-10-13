@@ -29,7 +29,7 @@ function Catalog() {
   const sortOptions = [
     { value: "name", label: "Alphabetical-Order" },
     { value: "priceDesc", label: "Price high-to-low" },
-    { value: "priceAsc", label: "price low-to-high" },
+    { value: "priceAsc", label: "Price low-to-high" },
   ];
 
   useEffect(() => {

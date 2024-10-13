@@ -8,6 +8,8 @@ namespace API.Entities
         public string BuyerId{ get; set; }
 
         public List<BasketItem> BasketItems { get; set; } = new List<BasketItem>();
+        public string PaymentIntentId { get; set; }
+        public string ClientSecret { get; set; }
 
         public void AddBasketItem(Product product, int quantity){
             if(BasketItems.All(item => item.ProductId != product.Id)){

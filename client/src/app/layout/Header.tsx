@@ -25,7 +25,7 @@ const sxProp = {
   typography: "h6",
   textDecoration: "none",
   "&:hover": { color: "grey.500" },
-  "&.active": { color: "secondary.main" },
+  "&.active": { color: "#bdbdbd" },
 };
 function Header(props: Props) {
   const { basket } = UseAppSelector((state) => state.basket);
@@ -33,7 +33,7 @@ function Header(props: Props) {
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <>
-      <AppBar position="static" sx={{ mb: 4 }}>
+      <AppBar position="static" sx={{ bgcolor: "#004d40" }}>
         <Toolbar
           sx={{
             display: "flex",
@@ -72,7 +72,7 @@ function Header(props: Props) {
                 mr: 2,
                 ml: 2,
                 "&:hover": { color: "grey.500" },
-                "&.active": { color: "secondary.main" },
+                "&.active": { color: "#1b5e20" },
               }}
             >
               <Badge badgeContent={itemCount} color="secondary">

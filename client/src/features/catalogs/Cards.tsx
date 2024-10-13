@@ -23,13 +23,17 @@ function Cards(props: Props) {
     <Card>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "secondary.main" }}>
+          <Avatar
+            sx={{
+              backgroundColor: "#00897b",
+            }}
+          >
             {props.Product?.name?.charAt(0).toUpperCase()}
           </Avatar>
         }
         title={props.Product.name}
         titleTypographyProps={{
-          sx: { fontWeight: "bold", color: "primary.main" },
+          sx: { fontWeight: "bold", color: "#00897b" },
         }}
       />
       <CardMedia
@@ -55,6 +59,7 @@ function Cards(props: Props) {
           }
           size="small"
           variant="contained"
+          sx={{ bgcolor: "#00897b" }}
         >
           Add to Cart
         </LoadingButton>
@@ -63,6 +68,7 @@ function Cards(props: Props) {
           variant="contained"
           component={Link}
           to={`/catalog/${props.Product.id}`}
+          sx={{ bgcolor: "#00897b" }}
         >
           View
         </Button>

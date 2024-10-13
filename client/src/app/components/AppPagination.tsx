@@ -18,11 +18,22 @@ export default function AppPagination({ metaData, onPageChange }: Props) {
         out of {totalCount} items
       </Typography>
       <Pagination
-        color="secondary"
         size="large"
         count={totalPages}
         page={currentPage}
         onChange={(_e, page) => onPageChange(page)}
+        sx={{
+          "& .MuiPaginationItem-root": {
+            "&.Mui-selected": {
+              backgroundColor: "#00897b", // Set background color for selected item
+              color: "white", // Set text color for selected item
+            },
+            "&:hover": {
+              backgroundColor: "#005b5b", // Set hover background color
+              color: "white", // Set hover text color
+            },
+          },
+        }}
       />
     </Box>
   );
