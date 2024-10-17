@@ -11,9 +11,15 @@ export default function AppCheckbox(props: Props) {
 
   return (
     <FormControlLabel
-      control={<Checkbox {...field} checked={field.value} color="secondary" />}
+      control={
+        <Checkbox
+          {...field}
+          checked={field.value}
+          color="secondary"
+          disabled={props.disabled}
+        />
+      }
       label={props.label}
-      disabled={props.disabled}
     />
   );
 }
