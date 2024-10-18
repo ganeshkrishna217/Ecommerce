@@ -120,7 +120,12 @@ export default function Register() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2, backgroundColor: "#00897b" }}
+          sx={{
+            mt: 3,
+            mb: 2,
+            backgroundColor: "#00897b",
+            "&:hover": { backgroundColor: "#424242" },
+          }}
         >
           Register
         </LoadingButton>

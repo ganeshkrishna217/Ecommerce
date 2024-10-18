@@ -1,4 +1,5 @@
 import {
+  Divider,
   // Alert,
   // AlertTitle,
   // Button,
@@ -21,16 +22,44 @@ function AboutPage() {
   // }
   return (
     <div>
-      <Typography variant="h3" sx={{ p: 4 }}>
-        About — We’re a globally distributed team driven by a shared mission: to
-        help our clients succeed through thoughtful, customer-centric solutions.
+      <Typography variant="h3" sx={{ p: 2 }}>
+        About us
       </Typography>
-      <Typography variant="h6" sx={{ p: 4 }}>
-        We believe in the positive impact a brand can have on people’s lives,
-        and approach every project from the perspective of the customer. Lucky
-        for us—our clients are often are favorite brands. Our goal is to create
-        experiences that resonate, add value, and help brands build lasting
-        connections with their communities.
+      <Divider />
+      <Typography variant="h5" sx={{ p: 2 }}>
+        At BKG_Store, we are a passionate team dedicated to delivering
+        exceptional shopping experiences for our customers. Our mission is
+        simple: to provide high-quality products with a focus on customer
+        satisfaction and convenience. We believe in the power of a well-curated
+        product selection and an intuitive shopping journey, allowing customers
+        to discover what they love effortlessly.
+      </Typography>
+      <Typography variant="h5" sx={{ p: 2 }}>
+        With outlets and stores located across the country, BKG_Store ensures
+        that no matter where you are, a trusted shopping experience is within
+        reach. Our widespread presence means that you can explore and purchase
+        your favorite products both online and in-store, making us a reliable
+        companion for all your shopping needs.
+      </Typography>
+      <Typography variant="h5" sx={{ p: 2 }}>
+        We take pride not only in serving customers but also in giving back to
+        the communities we are a part of. Our commitment to community engagement
+        involves partnering with local organizations, supporting causes that
+        matter, and fostering positive relationships with customers and vendors
+        alike. At BKG_Store, we strive to create spaces—both digital and
+        physical—that bring people together, making meaningful connections while
+        delivering value.
+      </Typography>
+      <Typography variant="h5" sx={{ p: 2 }}>
+        We believe that a brand's true impact lies in its ability to make a
+        difference. That’s why we are always looking for ways to contribute,
+        build trust, and strengthen our bond with the communities we serve.
+      </Typography>
+      <Typography variant="h5" sx={{ p: 2 }}>
+        At BKG_Store, our goal is to build lasting connections by combining
+        exceptional service, thoughtful solutions, and a seamless shopping
+        experience tailored to each customer’s needs. Your satisfaction is our
+        top priority.
       </Typography>
     </div>
     // // <Container>

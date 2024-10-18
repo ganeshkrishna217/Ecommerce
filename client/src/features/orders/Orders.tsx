@@ -65,7 +65,14 @@ export default function Orders() {
               </TableCell>
               <TableCell align="right">{order.orderStatus}</TableCell>
               <TableCell align="right">
-                <Button onClick={() => setSelectedOrderNumber(order.id)}>
+                <Button
+                  onClick={() => setSelectedOrderNumber(order.id)}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#00897b",
+                    "&:hover": { backgroundColor: "#424242" },
+                  }}
+                >
                   View
                 </Button>
               </TableCell>

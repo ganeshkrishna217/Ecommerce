@@ -8,19 +8,32 @@ function ContactPage() {
           We're Here
         </Typography>
         <Typography variant="h6" sx={{ ml: 4 }}>
-          Our door is always open for a good cup of coffee.
+          Our door is always open to help you find what you need.
         </Typography>
-        <Divider />
+        <Divider sx={{ borderBottomWidth: 2 }} />
       </div>
       <div>
-        <Typography variant="h2" sx={{ ml: 4, mt: 4 }}>
+        <Typography variant="h3" sx={{ ml: 4, mt: 4 }}>
           Get in touch
         </Typography>
         <Typography variant="h6" sx={{ ml: 4 }}>
-          Any FAQs? Want to get in touch? We'd love to hear from you. Here's how
-          you can reach us...
+          <br />
+          Got a question or feedback? We’d love to hear from you! Reach out to
+          us anytime, and we’ll get back to you as soon as possible.
+          <br />
+          <br />
+          Have FAQs or need help with your shopping? Feel free to contact us,
+          and our team will be happy to assist you with a prompt response.
+          <br />
+          <br />
+          For any inquiries or support, reach out and let us make your shopping
+          experience even smoother!
+          <br />
+          <br />
+          Want to get in touch? We’d love to hear from you. Here's how you can
+          reach us...
         </Typography>
-        <Divider />
+        <Divider sx={{ borderBottomWidth: 2 }} />
         <Typography variant="h6" sx={{ p: 4 }}>
           We value your feedback and inquiries! Our dedicated customer support
           team is here to assist you with any questions or concerns you may

@@ -59,7 +59,7 @@ function Cards(props: Props) {
           }
           size="small"
           variant="contained"
-          sx={{ bgcolor: "#00897b" }}
+          sx={{ bgcolor: "#00897b", "&:hover": { backgroundColor: "#424242" } }}
         >
           Add to Cart
         </LoadingButton>
@@ -68,7 +68,7 @@ function Cards(props: Props) {
           variant="contained"
           component={Link}
           to={`/catalog/${props.Product.id}`}
-          sx={{ bgcolor: "#00897b" }}
+          sx={{ bgcolor: "#00897b", "&:hover": { backgroundColor: "#424242" } }}
         >
           View
         </Button>

@@ -24,9 +24,13 @@ export default function OrderDetailed({ order, setSelectedOrder }: Props) {
         </Typography>
         <Button
           onClick={() => setSelectedOrder(0)}
-          sx={{ m: 2 }}
           variant="contained"
           size="large"
+          sx={{
+            m: 2,
+            backgroundColor: "#00897b",
+            "&:hover": { backgroundColor: "#424242" },
+          }}
         >
           Back to orders
         </Button>
